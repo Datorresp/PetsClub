@@ -13,13 +13,13 @@ import java.util.*;
  */
 public class Window {
     
-    public Club c;
+    public Club cl;
     public Scanner reader;
 
     public Window() {
         
         reader = new Scanner(System.in);
-        c = new Club("Club", "12312313");
+        cl = new Club("Club", "12312313");
     }
 
     	public String BannerSeparation() {
@@ -78,7 +78,7 @@ public class Window {
         public void banner() {
 
             String msj = "";
-            boolean exit = false;
+            
 
             msj += "*****************************************************************************\n";
             msj += "********************* BIENVENIDO AL CLUB PARA MASCOTAS **********************\n";
@@ -89,13 +89,144 @@ public class Window {
 
             msj += BannerSeparation();
             
-            while (!exit) {
-                
-                
-            }
+            menufuncion();
 
             System.out.println(msj);
             
 	}
+        
+        public void menufuncion(){
+            
+            boolean salir = false;
+
+		while (!salir) {
+			
+			int userImput = menuJuego();
+                        
+                        switch (userImput) {
+                        case 1:
+                            addClient();
+                            try {
+  				Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+
+                            }
+                            break;
+                        
+                        case 2:
+                            addPet();
+                            
+                            try {
+  				Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+
+                            }
+                        
+                        default:
+                            throw new AssertionError();
+                    }
+                }
+
+        }
+        
+        public void addClient(){
+            
+            System.out.println('\n');
+            System.out.println("Dijite el nombre del asociado");
+            
+            String name = reader.nextLine();
+            
+            System.out.println('\n');
+            System.out.println("Dijite el apellido del asociado");
+            
+            String lastName = reader.nextLine();
+            
+            System.out.println('\n');
+            System.out.println("Dijite el id del asociado");
+            
+            String id = reader.nextLine();
+            
+            System.out.println('\n');
+            System.out.println("Dijite el tipo de mascota favorita del asociado");
+            char type = reader.nextLine().charAt(0);
+            
+            
+            System.out.println("\n");
+            System.out.println("Ingrese el dia de nacimiento del asociado");
+
+            int day = reader.nextInt();
+            reader.nextLine();
+            
+            System.out.println("\n");
+            System.out.println("Ingrese el mes de nacimiento del asociado");
+
+            int month = reader.nextInt();
+            reader.nextLine();
+            
+            System.out.println("\n");
+            System.out.println("Ingrese el anio de nacimiento del asociado");
+
+            int year = reader.nextInt();
+            reader.nextLine();
+            
+            Calendar cal = new GregorianCalendar(year, month, day);
+            
+            Client e = new Client(id, name, lastName, type, cal);
+                    
+            cl.addClient(e);
+        }
+        
+        public void addPet(){
+            
+            System.out.println('\n');
+            System.out.println("Dijite el id del dueno");
+            
+            String id = reader.nextLine();
+            
+            System.out.println('\n');
+            System.out.println("Dijite el nombre de la mascota");
+            
+            String name = reader.nextLine();
+            
+            
+            System.out.println('\n');
+            System.out.println("Dijite el id de la mascota");
+            
+            String idc = reader.nextLine();
+            
+            System.out.println('\n');
+            System.out.println("Dijite el sexo de la mascota");
+            char sex = reader.nextLine().charAt(0);
+            
+            System.out.println('\n');
+            System.out.println("Dijite el tipo de  mascota");
+            
+            String type = reader.nextLine();
+            
+            
+            System.out.println("\n");
+            System.out.println("Ingrese el dia de nacimiento de la mascota");
+
+            int day = reader.nextInt();
+            reader.nextLine();
+            
+            System.out.println("\n");
+            System.out.println("Ingrese el mes de nacimiento de la mascota");
+
+            int month = reader.nextInt();
+            reader.nextLine();
+            
+            System.out.println("\n");
+            System.out.println("Ingrese el anio de nacimiento de la mascota");
+
+            int year = reader.nextInt();
+            reader.nextLine();
+            
+            Calendar cal = new GregorianCalendar(year, month, day);
+            
+            Pet p = new Pet(id, name, sex, type, cal);
+                    
+            cl.addPet(idc, p);
+        }
         
 }
