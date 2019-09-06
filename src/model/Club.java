@@ -14,6 +14,7 @@ public class Club {
 		super();
 		this.name = name;
 		this.nit = nit;
+                client = new ArrayList<Client>();
 	}
 
 	public String getName() {
@@ -93,4 +94,16 @@ public class Club {
 		
 		return msj + '\n';
 	}
+        
+        public int comparetoNit(Club c){
+            
+            return nit.compareTo(c.getNit());
+        }
+
+    @Override
+    public String toString() {
+        return "Club{" + "name=" + name + ", nit=" + nit + '}';
+    }
+        
+            
 }
