@@ -21,7 +21,7 @@ public class Client {
 		this.lastName = lastName;
 		this.pet = pet;
 		this.cal = cal;
-		
+		pets = new ArrayList<Pet>();
 	}
 	
 	public String getId() {
@@ -72,7 +72,7 @@ public class Client {
 
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", lastName=" + lastName + ", fav pet=" + pet + ", Birthday=" + cal + "]";
+		return "Client [id=" + id + ", name=" + name + ", lastName=" + lastName + ", fav pet=" + pet + ", years=" + edad() + "]";
 	}
 	
 	public String petInfo(String id) {
@@ -90,4 +90,20 @@ public class Client {
 		
 		return msj;
 	}
+        
+        public int edad(){
+            
+            
+            Calendar fecha = new GregorianCalendar();
+            int anio = fecha.get(Calendar.YEAR) - cal.get(Calendar.YEAR);
+            int month = fecha.get(Calendar.MONTH) - cal.get(Calendar.MONTH);
+            int dia = fecha.get(Calendar.DAY_OF_MONTH) - cal.get(Calendar.DAY_OF_MONTH);
+            
+            if (month < 0 || (month == 0 &&  dia < 0 )) {
+                
+                anio--;
+            }
+             
+            return anio;
+        }
 }
