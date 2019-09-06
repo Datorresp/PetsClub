@@ -13,56 +13,117 @@ import java.util.*;
  */
 public class Window {
     
-    public Club cl;
+    public ArrayList <Club> cl;
     public Scanner reader;
 
     public Window() {
         
+        cl = new ArrayList<Club>();
         reader = new Scanner(System.in);
-        cl = new Club("Club", "12312313");
-    }
-
-    	public String BannerSeparation() {
-		StringBuilder all = new StringBuilder();
-		all.append("\n");
-		int ancho = 17;
-		for (int a = 1; a <= 4; a++) {
-			int cantidadAsteriscos = ancho - a;
-			int cantidadEspacios = ancho - cantidadAsteriscos;
-			int cantidadSlashes = (ancho - a) * 2;
-			int cantidadDeBackSlashes = (a - 1) * 2;
-			appendChars(all, '*', cantidadAsteriscos);
-			appendChars(all, ' ', cantidadEspacios);
-			appendChars(all, '/', cantidadSlashes);
-			appendChars(all, '\\', cantidadDeBackSlashes);
-			appendChars(all, ' ', cantidadEspacios);
-			appendChars(all, '*', cantidadAsteriscos);
-			all.append("\n");
-		}
-
-		for (int a = 4; a >= 1; a--) {
-			int cantidadAsteriscos = ancho - a;
-			int cantidadEspacios = ancho - cantidadAsteriscos;
-			int cantidadDeBackSlashes = (ancho - a) * 2;
-			int cantidadSlashes = (a - 1) * 2;
-			appendChars(all, '*', cantidadAsteriscos);
-			appendChars(all, ' ', cantidadEspacios);
-			appendChars(all, '/', cantidadSlashes);
-			appendChars(all, '\\', cantidadDeBackSlashes);
-			appendChars(all, ' ', cantidadEspacios);
-			appendChars(all, '*', cantidadAsteriscos);
-			all.append("\n");
-		}
-		all.append("\n");
-		return all.toString();
-	}
-    
-    	public void appendChars(StringBuilder sb, char c, int count) {
-		for (int i = 0; i < count; i++) {
-			sb.append(c);
-		}
-	}
         
+    }
+    
+        public void addClub(Club c){
+            
+            cl.add(c);
+        }
+        
+        public int binarySearchClub(String nit){
+            
+            int club = 0;
+            boolean encontrar = false;
+            int inicio= 0;
+            int fin  = cl.size() -1;
+            
+            while (inicio <= fin && !encontrar) {
+                
+                int medio = (inicio + fin)/2;
+                if (cl.get(medio).comparetoNit(cl.get(0)) == cl.get(medio).getNit().compareTo(nit)) {
+                    
+                    encontrar = true;
+                    club = medio;
+                    System.out.println(" El club es: " + cl.get(club).toString());
+                    
+                }else if(cl.get(medio).comparetoNit(cl.get(0)) > cl.get(medio).getNit().compareTo(nit)){
+                    
+                    fin = medio - 1;
+                    
+                }else{
+                    
+                    inicio = medio + 1;
+                }
+            }
+            
+            return club;
+        }
+        
+        public int clubChoise(){
+            
+            
+            
+            System.out.println("Seleccione una opcion");
+            System.out.println("1. Ingresar Nit ");
+            System.out.println("2. Crear un club ");
+            System.out.println("4. Salir ");
+
+		int valor = reader.nextInt();
+		reader.nextLine();			
+		return valor;
+            
+        }
+        
+        public int nits(){
+            
+            System.out.println("Ingresar Nit");
+
+		String valor = reader.nextLine();
+                
+                return binarySearchClub(valor);
+        }
+        
+        public void inicio (){
+            
+            boolean salir = false;
+            
+            while (!salir) {
+                
+                int userInput = clubChoise();
+                
+                switch (userInput) {
+                    case 2:
+                        
+                        addClubs();
+                        
+                        break;
+                        
+                    case 1:
+                        
+                       nits();
+                        
+                    default:
+                        
+                        salir = true;
+                        
+                }
+            }
+        }
+        
+        public void addClubs(){
+            
+            System.out.println('\n');
+            System.out.println("Dijite el nombre del club");
+            
+            String name = reader.nextLine();
+            
+            System.out.println('\n');
+            System.out.println("Dijite el nit del nit");
+            
+            String nit = reader.nextLine();
+            
+            Club c = new Club(name, nit);
+            addClub(c);
+        }
+              
         public int menuJuego(){
             System.out.println("Seleccione una opcion");
             System.out.println("1. Crear un socio ");
@@ -87,7 +148,8 @@ public class Window {
             msj += "****************************** Universidad Icesi  ***************************\n";
             msj += "*****************************************************************************\n";
 
-            msj += BannerSeparation();
+            
+            inicio();
             
             menufuncion();
 
@@ -107,7 +169,7 @@ public class Window {
                         case 1:
                             addClient();
                             try {
-  				Thread.sleep(3000);
+  				Thread.sleep(1500);
                             } catch (InterruptedException e) {
 
                             }
@@ -117,13 +179,14 @@ public class Window {
                             addPet();
                             
                             try {
-  				Thread.sleep(3000);
+  				Thread.sleep(1500);
                             } catch (InterruptedException e) {
 
                             }
+                            break;
                         
                         default:
-                            throw new AssertionError();
+                            salir = true;
                     }
                 }
 
@@ -173,7 +236,7 @@ public class Window {
             
             Client e = new Client(id, name, lastName, type, cal);
                     
-            cl.addClient(e);
+            cl.get(nits()).addClient(e);
         }
         
         public void addPet(){
@@ -182,6 +245,8 @@ public class Window {
             System.out.println("Dijite el id del dueno");
             
             String id = reader.nextLine();
+            
+            System.out.println(cl.get(clubChoise()).ClientInfo(id));
             
             System.out.println('\n');
             System.out.println("Dijite el nombre de la mascota");
@@ -226,7 +291,7 @@ public class Window {
             
             Pet p = new Pet(id, name, sex, type, cal);
                     
-            cl.addPet(idc, p);
+            cl.get(nits()).addPet(idc, p);
         }
         
 }
