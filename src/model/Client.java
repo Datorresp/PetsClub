@@ -1,4 +1,8 @@
 package model;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 /**
  *
@@ -105,5 +109,28 @@ public class Client {
             }
              
             return anio;
+        }
+        
+        public void loadTextFile(String csv, String sep)throws IOException{
+             
+            if (csv != null) {
+                
+                File f = new File (csv);
+                FileReader fr = new  FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+                
+                String line = br.readLine();
+                
+                while (line != null) {
+                    
+                    System.out.println(line);
+                    
+                    if (line.charAt(0) != '#') {
+                        
+                        String[] parts = line.split(sep);
+                        
+                    }
+                }
+            }
         }
 }
