@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package ui;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import model.*;
 import java.util.*;
 
@@ -154,15 +159,13 @@ public class Window {
 
 
             System.out.println(msj);
-            
-            clubfuncion();
-
-
-            
+            fichero();
+            clubfuncion();          
 	}
         
         public void menufuncion(){
             
+            try{
             boolean salir = false;
 
 		while (!salir) {
@@ -193,6 +196,11 @@ public class Window {
                             salir = true;
                     }
                 }
+            }catch (InputMismatchException ex) {
+               System.out.println("Dato Erroneo vuelva a escribirlo");
+                
+                reader.nextLine();
+            }
 
         }
         
@@ -241,61 +249,142 @@ public class Window {
             Client e = new Client(id, name, lastName, type, cal);
                     
             cl.get(chooseClub()).addClient(e);
+            
+            String rutaFichero = "/Users/diegoa.torres/Documents/Socio.rtf";
+            
+            try{
+                
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaFichero));
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(rutaFichero));
+                
+                oos.writeObject(e);
+                oos.close();
+                
+                Client readClient = (Client) ois.readObject();
+                ois.close();
+                
+            }catch (IOException ex) {
+                
+                System.out.println(ex.getMessage());
+            }catch (ClassNotFoundException ex) {
+                
+                System.out.println(ex.getMessage());
+            }
         }
         
         public void addPet(){
             
-            System.out.println('\n');
-            System.out.println("Dijite el id del dueno");
+            try{
             
-            String id = reader.nextLine();
-            
-            
-            System.out.println('\n');
-            System.out.println("Dijite el nombre de la mascota");
-            
-            String name = reader.nextLine();
-            
-            
-            System.out.println('\n');
-            System.out.println("Dijite el id de la mascota");
-            
-            String idc = reader.nextLine();
-            
-            System.out.println('\n');
-            System.out.println("Dijite el sexo de la mascota");
-            char sex = reader.nextLine().charAt(0);
-            
-            System.out.println('\n');
-            System.out.println("Dijite el tipo de  mascota");
-            
-            String type = reader.nextLine();
-            
-            
-            System.out.println("\n");
-            System.out.println("Ingrese el dia de nacimiento de la mascota");
+                System.out.println('\n');
+                System.out.println("Dijite el id del dueno");
 
-            int day = reader.nextInt();
-            reader.nextLine();
-            
-            System.out.println("\n");
-            System.out.println("Ingrese el mes de nacimiento de la mascota");
+                String id = reader.nextLine();
 
-            int month = reader.nextInt();
-            reader.nextLine();
-            
-            System.out.println("\n");
-            System.out.println("Ingrese el anio de nacimiento de la mascota");
 
-            int year = reader.nextInt();
-            reader.nextLine();
+                System.out.println('\n');
+                System.out.println("Dijite el nombre de la mascota");
+
+                String name = reader.nextLine();
+
+
+                System.out.println('\n');
+                System.out.println("Dijite el id de la mascota");
+
+                String idc = reader.nextLine();
+
+                System.out.println('\n');
+                System.out.println("Dijite el sexo de la mascota");
+                char sex = reader.nextLine().charAt(0);
+
+                System.out.println('\n');
+                System.out.println("Dijite el tipo de  mascota");
+
+                String type = reader.nextLine();
+
+
+                System.out.println("\n");
+                System.out.println("Ingrese el dia de nacimiento de la mascota");
+
+                int day = reader.nextInt();
+                reader.nextLine();
+
+                System.out.println("\n");
+                System.out.println("Ingrese el mes de nacimiento de la mascota");
+
+                int month = reader.nextInt();
+                reader.nextLine();
+
+                System.out.println("\n");
+                System.out.println("Ingrese el anio de nacimiento de la mascota");
+
+                int year = reader.nextInt();
+                reader.nextLine();
+
+                Calendar cal = new GregorianCalendar(year, month+1, day);
+
+                Pet p = new Pet(id, name, sex, type, cal);
+
+                cl.get(chooseClub()).addPet(id, p);
+
+                String rutaFichero = "/Users/diegoa.torres/Documents/Objetos.rtf";         
+
+                try{
+
+                    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaFichero));
+                    ObjectInputStream ois = new ObjectInputStream(new FileInputStream(rutaFichero));
+
+                    oos.writeObject(p);
+                    oos.close();
+
+                    Pet readClient = (Pet) ois.readObject();
+                    ois.close();
+
+                }catch (IOException ex) {
+
+                    System.out.println(ex.getMessage());
+                }catch (ClassNotFoundException ex) {
+
+                    System.out.println(ex.getMessage());
+                }
+            }catch (InputMismatchException ex) {
+                
+                System.out.println("Dato Erroneo vuelva a escribirlo");
+                
+                reader.nextLine();
+            }
             
-            Calendar cal = new GregorianCalendar(year, month, day);
-            
-            Pet p = new Pet(id, name, sex, type, cal);
-            
-            cl.get(chooseClub()).addPet(id, p);
+        }
                     
+        
+        
+        public void fichero(){
+            
+            String rutaFichero = "/Users/diegoa.torres/Documents/Objetos.rtf";
+            Calendar cal = new GregorianCalendar(2001, 13, 14);
+            Client c  = new Client("1193254110",  "Diego", "Torres", 'P', cal);
+            
+            try{
+                
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaFichero));
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(rutaFichero));
+                
+                oos.writeObject(c);
+                oos.close();
+                
+                Client readClient = (Client) ois.readObject();
+                ois.close();
+                
+                System.out.println("Persona Escrita: " + c);
+                System.out.println("Persona leida" + readClient);
+            }catch (IOException ex) {
+                
+                System.out.println(ex.getMessage());
+            }catch (ClassNotFoundException ex) {
+                
+                System.out.println(ex.getMessage());
+            }
+            
         }
         
 }
