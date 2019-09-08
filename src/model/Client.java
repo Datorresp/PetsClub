@@ -3,22 +3,33 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 /**
  *
  * @author diegoa.torres
  */
-public class Client {
+public  class Client implements Serializable{
 
+    
     	private String id, name, lastName;
-	private char pet;
+        private char pet;
 	private int year;
 	private int month;
 	private int dayOfMonth;
 	private ArrayList <Pet> pets; 
 	
 	Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
-	public Client(String id, String name, String lastName, char pet, Calendar cal) {
+
+    /**
+     *
+     * @param id
+     * @param name
+     * @param lastName
+     * @param pet
+     * @param cal
+     */
+    public Client(String id, String name, String lastName, char pet, Calendar cal) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -28,48 +39,91 @@ public class Client {
 		pets = new ArrayList<Pet>();
 	}
 	
-	public String getId() {
+    /**
+     *
+     * @return
+     */
+    public String getId() {
 		return id;
 	}
 	
-	public void setId(String id) {
+    /**
+     *
+     * @param id
+     */
+    public void setId(String id) {
 		this.id = id;
 	}
 	
-	public String getName() {
+    /**
+     *
+     * @return
+     */
+    public String getName() {
 		return name;
 	}
 	
-	public void setName(String name) {
+    /**
+     *
+     * @param name
+     */
+    public void setName(String name) {
 		this.name = name;
 	}
 	
-	public String getLastName() {
+    /**
+     *
+     * @return
+     */
+    public String getLastName() {
 		return lastName;
 	}
 	
-	public void setLastName(String lastName) {
+    /**
+     *
+     * @param lastName
+     */
+    public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 	
-	public char getPet() {
+    /**
+     *
+     * @return
+     */
+    public char getPet() {
 		return pet;
 	}
 	
-	public void setPet(char pet) {
+    /**
+     *
+     * @param pet
+     */
+    public void setPet(char pet) {
 		this.pet = pet;
 	}
 	
-	public Calendar getCal() {
+    /**
+     *
+     * @return
+     */
+    public Calendar getCal() {
 		return cal;
 	}
 	
-	public void setCal(Calendar cal) {
+    /**
+     *
+     * @param cal
+     */
+    public void setCal(Calendar cal) {
 		this.cal = cal;
 	}
 	
-	
-	public void addPet(Pet pet) {
+    /**
+     *
+     * @param pet
+     */
+    public void addPet(Pet pet) {
 		
 		pets.add(pet);
 	}
@@ -79,7 +133,12 @@ public class Client {
 		return "Client [id=" + id + ", name=" + name + ", lastName=" + lastName + ", fav pet=" + pet + ", years=" + edad() + "]";
 	}
 	
-	public String petInfo(String id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public String petInfo(String id) {
 		
 		String msj = " ";
 		for (int i = 0; i < pets.size(); i++) {
@@ -95,7 +154,11 @@ public class Client {
 		return msj;
 	}
         
-        public int edad(){
+    /**
+     *
+     * @return
+     */
+    public int edad(){
             
             
             Calendar fecha = new GregorianCalendar();
@@ -111,7 +174,14 @@ public class Client {
             return anio;
         }
         
-        public void loadTextFile(String csv, String sep)throws IOException{
+    /**
+     *
+     * @param csv
+     * @param sep
+     * @throws IOException
+     * @throws csvException
+     */
+    public void loadTextFile(String csv, String sep)throws IOException, csvException{
              
             if (csv != null) {
                 
@@ -133,4 +203,6 @@ public class Client {
                 }
             }
         }
+    
+
 }
