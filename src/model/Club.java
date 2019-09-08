@@ -1,5 +1,9 @@
 package model;
-    import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 /**
  *
  * @author diegoa.torres
@@ -104,6 +108,28 @@ public class Club {
     public String toString() {
         return "Club{" + "name=" + name + ", nit=" + nit + '}';
     }
-        
+      
+        public void loadTextFile(String csv, String sep)throws IOException, csvException{
+             
+            if (csv != null) {
+                
+                File f = new File (csv);
+                FileReader fr = new  FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+                
+                String line = br.readLine();
+                
+                while (line != null) {
+                    
+                    System.out.println(line);
+                    
+                    if (line.charAt(0) != '#') {
+                        
+                        String[] parts = line.split(sep);
+                        
+                    }
+                }
+            }
+        }
             
 }
