@@ -1,5 +1,9 @@
 package model;
  
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.io.Serializable;
 
@@ -82,4 +86,28 @@ public class Pet implements Serializable{
 	public String toString() {
 		return "Pet [id=" + id + ", name: " + name + ", type: " + type + ", sex: " + sex + ", birthDate: " + birthDate + "]";
 	}
+        
+            public void loadTextFile(String csv, String sep)throws IOException, csvException{
+             
+        if (csv != null) {
+                
+            File f = new File (csv);
+            FileReader fr = new  FileReader(f);
+       
+            BufferedReader br = new BufferedReader(fr);
+                
+           String line = br.readLine();
+            
+           while (line != null) {
+                    
+                    System.out.println(line);
+                    
+                    if (line.charAt(0) != '#') {
+                        
+                        String[] parts = line.split(sep);
+                        
+                    }
+                }
+            }
+        }
 }
