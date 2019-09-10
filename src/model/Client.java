@@ -180,28 +180,6 @@ public  class Client implements Serializable{
      * @throws IOException
      * @throws csvException
      */
-    public void loadTextFile(String csv, String sep)throws IOException, csvException{
-             
-            if (csv != null) {
-                
-                File f = new File (csv);
-                FileReader fr = new  FileReader(f);
-                BufferedReader br = new BufferedReader(fr);
-                
-                String line = br.readLine();
-                
-                while (line != null) {
-                    
-                    System.out.println(line);
-                    
-                    if (line.charAt(0) != '#') {
-                        
-                        String[] parts = line.split(sep);
-                        
-                    }
-                }
-            }
-        }
     
     public int comparetoName(Client c){
             
@@ -228,4 +206,41 @@ public  class Client implements Serializable{
         
         return edad()-c.edad();
     }
+    
+    public void loadTextFile(String csv, String sep)throws IOException, csvException{
+
+        if (csv != null) {
+
+            File f = new File (csv);
+            FileReader fr = new  FileReader(f);
+
+            BufferedReader br = new BufferedReader(fr);
+
+           String line = br.readLine();
+
+           while (line != null) {
+
+                System.out.println(line);
+
+                if (line.charAt(0) != '#') {
+
+                    String[] parts = line.split(sep);
+                    String id = parts[1];
+                    String name = parts[2];
+                    String sex = parts[3];
+                    String type = parts[4];
+                    String age = parts[5].substring(0, 8);
+                    Calendar ca = new GregorianCalendar(year, month, dayOfMonth);
+                    Pet p  = new Pet(id, name, sex.charAt(0),type, ca);
+                    
+                    pets.add(p);
+                    line = br.readLine();
+                }
+            }
+        }else{
+            
+            throw new csvException();
+        }
+    }
+    
 }

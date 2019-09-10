@@ -115,28 +115,6 @@ public String toString() {
     return "Club{" + "name=" + name + ", nit=" + nit + '}';
 }
 
-    public void loadTextFile(String csv, String sep)throws IOException, csvException{
-
-        if (csv != null) {
-
-            File f = new File (csv);
-            FileReader fr = new  FileReader(f);
-            BufferedReader br = new BufferedReader(fr);
-
-            String line = br.readLine();
-
-            while (line != null) {
-
-                System.out.println(line);
-
-                if (line.charAt(0) != '#') {
-
-                    String[] parts = line.split(sep);
-
-                }
-            }
-        }
-    }
 
     public void OrdenPorNombre(ArrayList<Client> cl){
         
@@ -348,4 +326,41 @@ public String toString() {
 
         return persona; 
     }
+
+    public void loadTextFile(String csv, String sep)throws IOException, csvException{
+             
+            if (csv != null) {
+                
+                File f = new File (csv);
+                FileReader fr = new  FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+                
+                String line = br.readLine();
+                
+                while (line != null) {
+                    
+                    System.out.println(line);
+                    
+                    if (line.charAt(0) != '#') {
+                        
+                        String[] parts = line.split(sep);
+                        String id = parts[6];
+                        String name = parts[7];
+                        String LastName = parts[8];
+                        String favPet = parts[9];
+                        String Birthdate = parts[10].substring(0, 8);
+                        
+                        Calendar ca = new GregorianCalendar(1, 2, 3);
+                        Client cl = new Client(id, name, LastName, favPet.charAt(0), ca);
+                        client.add(cl);
+                        line = br.readLine();
+                        
+                    }
+                }
+            }else{
+            
+            throw new csvException();
+            }
+        }
+    
 }
