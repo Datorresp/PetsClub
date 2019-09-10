@@ -204,5 +204,18 @@ public  class Client implements Serializable{
             }
         }
     
-
+            public int comparetoName(Client c){
+            
+            return name.compareTo(c.getName());
+        }
+            
+            public int comparetoLastName(Client c){
+            
+            return lastName.compareTo(c.getLastName());
+        }
+            
+            public int comparetoId(Client c){
+            
+            return id.compareTo(c.getId());
+        }        
 }
