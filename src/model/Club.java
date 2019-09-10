@@ -103,6 +103,11 @@ public class Club {
             
             return nit.compareTo(c.getNit());
         }
+        
+        public int comparetoName(Club c){
+            
+            return name.compareTo(c.getName());
+        }
 
     @Override
     public String toString() {
