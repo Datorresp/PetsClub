@@ -12,14 +12,13 @@ import java.util.*;
 public  class Client implements Serializable{
 
     
-    	private String id, name, lastName;
-        private char pet;
-	private int year;
-	private int month;
-	private int dayOfMonth;
-	private ArrayList <Pet> pets; 
-	
-	Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
+    private String id, name, lastName;
+    private char pet;
+    private int year;
+    private int month;
+    private int dayOfMonth;
+    private ArrayList <Pet> pets; 
+    Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
 
     /**
      *
@@ -30,13 +29,13 @@ public  class Client implements Serializable{
      * @param cal
      */
     public Client(String id, String name, String lastName, char pet, Calendar cal) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.lastName = lastName;
-		this.pet = pet;
-		this.cal = cal;
-		pets = new ArrayList<Pet>();
+        super();
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.pet = pet;
+        this.cal = cal;
+        pets = new ArrayList<Pet>();
 	}
 	
     /**
@@ -44,24 +43,24 @@ public  class Client implements Serializable{
      * @return
      */
     public String getId() {
-		return id;
-	}
+        return id;
+    }
 	
     /**
      *
      * @param id
      */
     public void setId(String id) {
-		this.id = id;
-	}
+	this.id = id;
+    }
 	
     /**
      *
      * @return
      */
     public String getName() {
-		return name;
-	}
+	return name;
+    }
 	
     /**
      *
@@ -204,18 +203,29 @@ public  class Client implements Serializable{
             }
         }
     
-            public int comparetoName(Client c){
+    public int comparetoName(Client c){
             
-            return name.compareTo(c.getName());
-        }
+        return name.compareTo(c.getName());
+    }
             
-            public int comparetoLastName(Client c){
+    public int comparetoLastName(Client c){
             
-            return lastName.compareTo(c.getLastName());
-        }
+        return lastName.compareTo(c.getLastName());
+    }
             
-            public int comparetoId(Client c){
+    public int comparetoId(Client c){
             
-            return id.compareTo(c.getId());
-        }        
+        return id.compareTo(c.getId());
+        
+    }
+    
+    public int comparetoFavoritePet(Client c){
+        
+        return Character.toString(pet).compareTo(Character.toString(c.getPet()));
+    }
+    
+    public int comparetoAge(Client c){
+        
+        return edad()-c.edad();
+    }
 }
