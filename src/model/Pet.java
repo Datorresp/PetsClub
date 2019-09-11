@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @author diegoa.torres
  */
-public class Pet implements Serializable{
+public class Pet implements Serializable, Comparable<Object>, Comparator<Object>{
 
     private static final long serialVersionUID = 1L;
     private String id, name, type;
@@ -126,4 +126,14 @@ public class Pet implements Serializable{
         
         return edad()-p.edad();
     }         
+
+    @Override
+    public int compareTo(Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int compare(Object o1, Object o2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
