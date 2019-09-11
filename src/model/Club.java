@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author diegoa.torres
  */
-public class Club {
+public class Club implements Comparable<Object>, Comparator<Object>{
     
     private String name;
     private String nit;
@@ -408,5 +408,15 @@ public String toString() {
         }
         
         return msj;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int compare(Object o1, Object o2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
