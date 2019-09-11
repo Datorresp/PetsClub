@@ -1,8 +1,12 @@
 package model;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 /**
  *
@@ -116,84 +120,84 @@ public String toString() {
 }
 
 
-    public void OrdenPorNombre(ArrayList<Client> cl){
+    public void OrdenPorNombre(){
         
         String msj = "";
         
-        for (int i = 1; i < cl.size() ; i++) {
+        for (int i = 1; i < client.size() ; i++) {
             
             int j = i;
             
-            while (j > 0 && cl.get(j).comparetoName(cl.get(j-1)) < 0) {
+            while (j > 0 && client.get(j).comparetoName(client.get(j-1)) < 0) {
                 
-                Client tmp = cl.get(j);
-                cl.set(j, cl.get(j-1));
-                cl.set(j-1, tmp);
+                Client tmp = client.get(j);
+                client.set(j, client.get(j-1));
+                client.set(j-1, tmp);
                 j--;
             }
         }
     }
     
-    public void OrdenarPorApellido(ArrayList<Client> cl){
+    public void OrdenarPorApellido(){
         
-        for (int i = 1; i < cl.size() ; i++) {
+        for (int i = 1; i < client.size() ; i++) {
             
             int j = i;
             
-            while (j > 0 && cl.get(j).comparetoLastName(cl.get(j-1)) < 0) {
+            while (j > 0 && client.get(j).comparetoLastName(client.get(j-1)) < 0) {
                 
-                Client tmp = cl.get(j);
-                cl.set(j, cl.get(j-1));
-                cl.set(j-1, tmp);
+                Client tmp = client.get(j);
+                client.set(j, client.get(j-1));
+                client.set(j-1, tmp);
                 j--;
             }
         }
     }
     
         
-    public void OrdenarPorID(ArrayList<Client> cl){
+    public void OrdenarPorID(){
         
-        for (int i = 1; i < cl.size() ; i++) {
+        for (int i = 1; i < client.size() ; i++) {
             
             int j = i;
             
-            while (j > 0 && cl.get(j).comparetoId(cl.get(j-1)) < 0) {
+            while (j > 0 && client.get(j).comparetoId(client.get(j-1)) < 0) {
                 
-                Client tmp = cl.get(j);
-                cl.set(j, cl.get(j-1));
-                cl.set(j-1, tmp);
+                Client tmp = client.get(j);
+                client.set(j, client.get(j-1));
+                client.set(j-1, tmp);
                 j--;
             }
         }
     }
  
-    public void OrdenarPorFavoritePet(ArrayList<Client> cl){
+    public void OrdenarPorFavoritePet(){
         
-        for (int i = 1; i < cl.size() ; i++) {
+        for (int i = 1; i < client.size() ; i++) {
             
             int j = i;
             
-            while (j > 0 && cl.get(j).comparetoFavoritePet(cl.get(j-1)) < 0) {
+            while (j > 0 && client.get(j).comparetoFavoritePet(client.get(j-1)) < 0) {
                 
-                Client tmp = cl.get(j);
-                cl.set(j, cl.get(j-1));
-                cl.set(j-1, tmp);
+                Client tmp = client.get(j);
+                client.set(j, client.get(j-1));
+                client.set(j-1, tmp);
                 j--;
             }
         }
     }   
             
-    public void OrdenarPorEdad(ArrayList<Client> cl){
+    public void OrdenarPorEdad(){
         
-        for (int i = 1; i < cl.size() ; i++) {
+        for (int i = 1; i < client.size() ; i++) {
             
             int j = i;
             
-            while (j > 0 && cl.get(j).comparetoAge(cl.get(j-1)) < 0) {
+            while (j > 0 && client.get(j).comparetoAge(client.get(j-1)) < 0) {
                 
-                Client tmp = cl.get(j);
-                cl.set(j, cl.get(j-1));
-                cl.set(j-1, tmp);
+                Client tmp = client.get(j);
+                client.set(j, client.get(j-1));
+                client.set(j-1, tmp);
                 j--;
             }
         }
@@ -334,27 +338,58 @@ public String toString() {
                 File f = new File (csv);
                 FileReader fr = new  FileReader(f);
                 BufferedReader br = new BufferedReader(fr);
+                int i = 0;
                 
                 String line = br.readLine();
                 
-                while (line != null) {
+                while (line != null && client.size() > i) {
                     
                     System.out.println(line);
                     
                     if (line.charAt(0) != '#') {
                         
                         String[] parts = line.split(sep);
-                        String id = parts[6];
-                        String name = parts[7];
-                        String LastName = parts[8];
-                        String favPet = parts[9];
-                        String Birthdate = parts[10].substring(0, 8);
+                        String id = parts[0];
+                        String name = parts[1];
+                        String LastName = parts[2];
+                        String favPet = parts[3];
+                        String Birthdate = parts[4].substring(0, 9);
+                        String month = parts[4].substring(0, 1);
+                        String day = parts[4].substring(3, 4);
+                        String year = parts[4].substring(6, 9);
                         
-                        Calendar ca = new GregorianCalendar(1, 2, 3);
+                        
+                       
+                        Calendar ca = new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month) + 1, Integer.parseInt(day));
                         Client cl = new Client(id, name, LastName, favPet.charAt(0), ca);
                         client.add(cl);
-                        line = br.readLine();
+                        addPet(id, client.get(i).loadTextFile(csv, sep));                        
                         
+                        String rutaFichero = "Socio.txt";
+
+                        try{
+
+                            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaFichero));
+                            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(rutaFichero));
+
+                            oos.writeObject(cl);
+                            oos.close();
+
+                            Client readClient = (Client) ois.readObject();
+                            ois.close();
+                            System.out.println("Persona: " + cl.toString());
+
+                        }catch (IOException ex) {
+
+                            System.out.println(ex.getMessage());
+                        }catch (ClassNotFoundException ex) {
+
+                            System.out.println(ex.getMessage());
+                        }
+                        
+                       
+                        line = br.readLine();
+                       i++; 
                     }
                 }
             }else{
@@ -362,5 +397,16 @@ public String toString() {
             throw new csvException();
             }
         }
-    
+    public String allClient(){
+        
+        String msj= "";
+        
+        for (int i = 0; i < client.size(); i++) {
+            
+            msj += client.get(i).toString();
+            msj += "no";
+        }
+        
+        return msj;
+    }
 }

@@ -11,7 +11,7 @@ import java.util.*;
  */
 public  class Client implements Serializable{
 
-    
+    private static final long serialVersionUID = -1L;
     private String id, name, lastName;
     private char pet;
     private int year;
@@ -160,26 +160,20 @@ public  class Client implements Serializable{
     public int edad(){
             
             
-            Calendar fecha = new GregorianCalendar();
-            int anio = fecha.get(Calendar.YEAR) - cal.get(Calendar.YEAR);
-            int month = fecha.get(Calendar.MONTH) - cal.get(Calendar.MONTH);
-            int dia = fecha.get(Calendar.DAY_OF_MONTH) - cal.get(Calendar.DAY_OF_MONTH);
-            
-            if (month < 0 || (month == 0 &&  dia < 0 )) {
-                
-                anio--;
-            }
-             
-            return anio;
+        Calendar fecha = new GregorianCalendar();
+        int anio = fecha.get(Calendar.YEAR) - cal.get(Calendar.YEAR);
+        int month = fecha.get(Calendar.MONTH) - cal.get(Calendar.MONTH);
+        int dia = fecha.get(Calendar.DAY_OF_MONTH) - cal.get(Calendar.DAY_OF_MONTH);
+
+        if (month < 0 || (month == 0 &&  dia < 0 )) {
+
+            anio--;
         }
+
+        return anio;
+    }
         
-    /**
-     *
-     * @param csv
-     * @param sep
-     * @throws IOException
-     * @throws csvException
-     */
+
     
     public int comparetoName(Client c){
             
@@ -207,8 +201,10 @@ public  class Client implements Serializable{
         return edad()-c.edad();
     }
     
-    public void loadTextFile(String csv, String sep)throws IOException, csvException{
-
+    public Pet loadTextFile(String csv, String sep)throws IOException, csvException{
+        
+        Pet pet = null;
+        
         if (csv != null) {
 
             File f = new File (csv);
@@ -225,21 +221,94 @@ public  class Client implements Serializable{
                 if (line.charAt(0) != '#') {
 
                     String[] parts = line.split(sep);
-                    String id = parts[1];
-                    String name = parts[2];
-                    String sex = parts[3];
-                    String type = parts[4];
-                    String age = parts[5].substring(0, 8);
+                    String id = parts[5];
+                    String name = parts[6];
+                    String sex = parts[7];
+                    String type = parts[8];
+                    String age = parts[9].substring(0, 8);
                     Calendar ca = new GregorianCalendar(year, month, dayOfMonth);
                     Pet p  = new Pet(id, name, sex.charAt(0),type, ca);
                     
                     pets.add(p);
+                    pet = p;
                     line = br.readLine();
                 }
             }
         }else{
             
             throw new csvException();
+        }
+        
+        return pet;
+    }
+    
+    public void OrdenarPorID(){
+        
+        for (int i = 1; i < pets.size() ; i++) {
+            
+            int j = i;
+            
+            while (j > 0 && pets.get(j).comparetoId(pets.get(j-1)) < 0) {
+                
+                Pet tmp = pets.get(j);
+                pets.set(j, pets.get(j-1));
+                pets.set(j-1, tmp);
+                j--;
+            }
+        }
+    }
+    
+    public void OrdenPorNombre(){
+        
+        String msj = "";
+        
+        for (int i = 1; i < pets.size() ; i++) {
+            
+            int j = i;
+            
+            while (j > 0 && pets.get(j).comparetoName(pets.get(j-1)) < 0) {
+                
+                Pet tmp = pets.get(j);
+                pets.set(j, pets.get(j-1));
+                pets.set(j-1, tmp);
+                j--;
+            }
+        }
+    }
+    
+    public void OrdenPorTipo(){
+        
+        String msj = "";
+        
+        for (int i = 1; i < pets.size() ; i++) {
+            
+            int j = i;
+            
+            while (j > 0 && pets.get(j).comparetoType(pets.get(j-1)) < 0) {
+                
+                Pet tmp = pets.get(j);
+                pets.set(j, pets.get(j-1));
+                pets.set(j-1, tmp);
+                j--;
+            }
+        }
+    }
+    
+    public void OrdenPorSexo(){
+        
+        String msj = "";
+        
+        for (int i = 1; i < pets.size() ; i++) {
+            
+            int j = i;
+            
+            while (j > 0 && pets.get(j).comparetoSex(pets.get(j-1)) < 0) {
+                
+                Pet tmp = pets.get(j);
+                pets.set(j, pets.get(j-1));
+                pets.set(j-1, tmp);
+                j--;
+            }
         }
     }
     
